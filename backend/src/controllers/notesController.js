@@ -1,5 +1,14 @@
-const getAllNotes = (req, res) => {
-    res.status(200).send("You just got 10 notes from the notesController.js file");
+import Note from "../models/Note.js";
+
+
+async function getAllNotes (req, res) {
+    try {
+        const Note = await Note.find();
+        res.status(200).json(notes);
+    } catch (error) {
+        console.error("Error in getAllNotes controller ", error);
+        res.status(500).json({message : "Internal Server Error"});
+    }
 }
 
 const createNote = (req, res) => {
