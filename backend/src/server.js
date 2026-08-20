@@ -1,8 +1,10 @@
 import express from "express"
+import cors from "cors"
+import dotenv from "dotenv";
+
 //const express = require("express");
 import notesRoutes from "./routes/notesRoutes.js";
 import {connectDB} from "./config/db.js";
-import dotenv from "dotenv";
 import rateLimiter from "./middleware/rateLimiter.js";
 
 
@@ -13,9 +15,16 @@ const PORT = process.env.PORT || 5001;
 
 connectDB();
 
+app.use(cors({
+  origin: "https://reimagined-yodel-97vq6jgxxpjr2pqx-5173.app.github.dev"
+}));
+
 //middleware
 app.use(express.json()); // this middleware will parse JSON bodies: req.body
-app.use(rateLimiter) // rateLimiter is the name of the middleware
+
+app.use(cors());
+app.use(rateLimiter); // rateLimiter is the name of the middleware
+
 
 //our simple custom middle ware
 // app.use((req, res, next) =>{
