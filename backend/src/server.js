@@ -15,9 +15,8 @@ const PORT = process.env.PORT || 5001;
 
 connectDB();
 
-app.use(cors({
-  origin: "https://reimagined-yodel-97vq6jgxxpjr2pqx-5173.app.github.dev"
-}));
+app.use(cors({origin : "https://miniature-train-6v5wxp5jw44h4vg-5173.app.github.dev/"}));   
+// origin: "https://reimagined-yodel-97vq6jgxxpjr2pqx-5173.app.github.dev"
 
 //middleware
 app.use(express.json()); // this middleware will parse JSON bodies: req.body
