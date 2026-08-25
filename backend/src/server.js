@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv";
+import path from "path";
 
 //const express = require("express");
 import notesRoutes from "./routes/notesRoutes.js";
@@ -12,16 +13,21 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+const __dirname = path.resolve();
 
 connectDB();
 
-app.use(cors({origin : "https://miniature-train-6v5wxp5jw44h4vg-5173.app.github.dev/"}));   
-// origin: "https://reimagined-yodel-97vq6jgxxpjr2pqx-5173.app.github.dev"
+
+if(process.env.NODE_ENV != "production"){
+    app.use(cors({origin : "https://miniature-train-6v5wxp5jw44h4vg-5173.app.github.dev/"}));   
+    // origin: "https://reimagined-yodel-97vq6jgxxpjr2pqx-5173.app.github.dev"
+}
+
 
 //middleware
 app.use(express.json()); // this middleware will parse JSON bodies: req.body
 
-app.use(cors());
+//app.use(cors());
 app.use(rateLimiter); // rateLimiter is the name of the middleware
 
 
@@ -32,6 +38,14 @@ app.use(rateLimiter); // rateLimiter is the name of the middleware
 // });
 
 app.use("/api/notes", notesRoutes);
+
+if(process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+    app.get("*", (req,res) => {
+        res.sendFile(Path2D.join(__dirname, "../frontend", "dist", "index.html"));
+    });
+}
 
 
 app.listen(PORT, () =>{
