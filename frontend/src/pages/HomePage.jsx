@@ -40,7 +40,7 @@ const HomePage = () => {
   };
 
   return (
-  <div className="min-h-screen">
+  <div className="min-h-screen bg-base-300">
     <Navbar/ >
 
     {isRateLimited && <RateLimitedUI/>}

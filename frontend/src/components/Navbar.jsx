@@ -3,10 +3,14 @@ import { PlusIcon, SunIcon, MoonIcon } from "lucide-react"
 import { Link } from "react-router"
 
 const Navbar = () => {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(() => {
+    return localStorage.getItem("theme") !== "light";
+  });
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", isDark ? "coffee" : "retro");
+    const theme = isDark ? "coffee" : "garden";
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
   }, [isDark]);
 
   return (
